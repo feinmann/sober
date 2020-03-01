@@ -13,7 +13,8 @@ Imports:
     attempt,
     DT,
     glue,
-    htmltools
+    htmltools,
+    pkgload
 RoxygenNote: 7.0.2
 Suggests: 
     testthat
