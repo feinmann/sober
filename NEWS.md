@@ -6,3 +6,4 @@
 # sober 0.0.0.9000
 
 * Added a `NEWS.md` file to track changes to the package.
+* First deployment on shinyapps.io https://feinmann.shinyapps.io/sober
