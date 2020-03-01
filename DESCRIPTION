@@ -1,0 +1,19 @@
+Package: sober
+Title: Display days since getting away from something
+Version: 0.0.0.9000
+Authors@R: person('matthias', 'berger', email = 'bidmaster@gmx.de', role = c('cre', 'aut'))
+Description: Enter a date and get useful information and statistics.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    shiny,
+    golem,
+    processx,
+    attempt,
+    DT,
+    glue,
+    htmltools
+RoxygenNote: 7.0.2
+Suggests: 
+    testthat
