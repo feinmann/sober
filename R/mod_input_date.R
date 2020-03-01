@@ -24,7 +24,8 @@ mod_input_date_ui <- function(id){
       inputId = ns("calculate"),
       label = "Calculate statistics"
     ),
-    textOutput(ns("timediff"))
+    hr(),
+    DT::dataTableOutput(outputId = ns('result_data'))
   )
 }
     
@@ -37,23 +38,9 @@ mod_input_date_ui <- function(id){
 mod_input_date_server <- function(input, output, session){
   ns <- session$ns
   
-  return_parole <- function(time_diff_value) {
-    if (time_diff_value == 0) {
-      return("You are sober for 0 days.")
-    }  
-    
-    if (time_diff_value == 1) {
-      return("You are sober for 1 day.")
-    }
-    
-    if (time_diff_value > 1) {
-      return(paste0("You are sober for ", time_diff_value, " days."))
-    }
-  }
-  
   observeEvent( input$calculate , {
-    time_diff_value <- difftime(Sys.Date(), input$date)
-    output$timediff <- renderText(return_parole(time_diff_value))
+    result_data <- calculate_triples(input$date)
+    output$result_data <- DT::renderDataTable({ result_data })
   })
   
 }
