@@ -18,7 +18,7 @@ mod_input_date_ui <- function(id){
   tagList(
     dateInput(
       inputId = ns("date"), 
-      label = "Input date"
+      label = "Clean date"
     ),
     actionButton(
       inputId = ns("calculate"),
