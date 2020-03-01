@@ -39,15 +39,15 @@ mod_input_date_server <- function(input, output, session){
   
   return_parole <- function(time_diff_value) {
     if (time_diff_value == 0) {
-      "You are sober for 0 days."
+      return("You are sober for 0 days.")
     }  
     
     if (time_diff_value == 1) {
-      "You are sober for 1 day."
+      return("You are sober for 1 day.")
     }
     
     if (time_diff_value > 1) {
-      paste0("You are sober for ", time_diff_value, " days.")
+      return(paste0("You are sober for ", time_diff_value, " days."))
     }
   }
   
