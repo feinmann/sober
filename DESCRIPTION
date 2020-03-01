@@ -17,3 +17,5 @@ Imports:
 RoxygenNote: 7.0.2
 Suggests: 
     testthat
+URL: https://github.com/feinmann/sober
+BugReports: https://github.com/feinmann/sober/issues
