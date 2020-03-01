@@ -16,16 +16,22 @@
 calculate_triples <- function(clean_date) {
 
   dt_list <- list()
-  for (i in 1:200) {
+  for (i in 1:100) {
     dt_list[[i]] <- data.table(
       clean_date = clean_date,
       triple = clean_date %m+% months(i) %m+% weeks(i) %m+% days(i),
       triple_nr = i)
   }
-  data <- rbindlist(dt_list)
-  data[, `What about triples?` := paste("On ", triple, " you are sober for ", 
+  dt <- rbindlist(dt_list)
+  dt[, `What about triples?` := paste("On ", triple, " you will be sober for ", 
                                         triple_nr, "months, ", 
                                         triple_nr, "weeks and ", 
                                         triple_nr, " days.")]
-  return(data)
+  dt[triple_nr == 1, `What about triples?` := paste("On ", triple, " you will be sober for ", 
+                                                    triple_nr, "month, ", 
+                                                    triple_nr, "week and ", 
+                                                    triple_nr, " day.")]
+  dt[triple <= today(), `What about triples?` := gsub(`What about triples?`, 
+                                        pattern = "will be", replacement = "were", fixed = TRUE)]
+  return(dt)
 }
