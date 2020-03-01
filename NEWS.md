@@ -1,3 +1,7 @@
+# sober 0.1.1
+
+* Adjust column-names and delete `clean_date` column
+
 # sober 0.1.0
 
 * First Release
