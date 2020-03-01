@@ -1,0 +1,10 @@
+name: sober
+title:
+username:
+account: feinmann
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 1884445
+bundleId: 2841265
+url: https://feinmann.shinyapps.io/sober/
+when: 1583056292.76439
