@@ -14,7 +14,9 @@ Imports:
     DT,
     glue,
     htmltools,
-    pkgload
+    pkgload,
+    data.table,
+    lubridate
 RoxygenNote: 7.0.2
 Suggests: 
     testthat
