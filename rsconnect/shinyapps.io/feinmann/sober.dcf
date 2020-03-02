@@ -5,6 +5,6 @@ account: feinmann
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 1884445
-bundleId: 2841846
+bundleId: 2841865
 url: https://feinmann.shinyapps.io/sober/
-when: 1583086038.83965
+when: 1583086615.40529
