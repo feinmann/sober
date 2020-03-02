@@ -12,27 +12,54 @@
 #' @import lubridate
 #' @import data.table
 #'
-#' @examples result <- calculate_triple(lubridate::ymd("2020-02-20"))
+#' @examples result <- calculate_triples(lubridate::ymd("2020-02-20"))
 calculate_triples <- function(clean_date) {
-
+  
+  number <- 100
+  
   dt_list <- list()
-  for (i in 1:100) {
+  for (i in 1:number) {
     dt_list[[i]] <- data.table(
-      triple = clean_date %m+% months(i) %m+% weeks(i) %m+% days(i),
-      triple_nr = i)
+      triple = clean_date %m+% months(i) %m+% weeks(i) %m+% days(i))
+    dt_list[[i]][, message := paste("On ", triple, " you will be sober for ", 
+                                   i, "months, ", 
+                                   i, "weeks and ", 
+                                   i, " days.")]
   }
+  for (i in 1:number) {
+    dt_list[[i+number]] <- data.table(
+      triple = clean_date %m+% years(i) %m+% weeks(i) %m+% days(i))
+    dt_list[[i+number]][, message := paste("On ", triple, " you will be sober for ", 
+                                    i, "years, ", 
+                                    i, "weeks and ", 
+                                    i, " days.")]  
+  }
+  for (i in 1:number) {
+    dt_list[[i+(2*number)]] <- data.table(
+      triple = clean_date %m+% years(i) %m+% months(i) %m+% weeks(i))
+    dt_list[[i+(2*number)]][, message := paste("On ", triple, " you will be sober for ", 
+                                    i, "years, ", 
+                                    i, "months and ", 
+                                    i, " weeks.")]
+  }
+  for (i in 1:number) {
+    dt_list[[i+(3*number)]] <- data.table(
+      triple = clean_date %m+% years(i) %m+% months(i) %m+% days(i))
+    dt_list[[i+(3*number)]][, message := paste("On ", triple, " you will be sober for ", 
+                                    i, "years, ", 
+                                    i, "months and ", 
+                                    i, " days.")]
+  }
+  
   dt <- rbindlist(dt_list)
-  dt[, `What about triples?` := paste("On ", triple, " you will be sober for ", 
-                                        triple_nr, "months, ", 
-                                        triple_nr, "weeks and ", 
-                                        triple_nr, " days.")]
-  dt[triple_nr == 1, `What about triples?` := paste("On ", triple, " you will be sober for ", 
-                                                    triple_nr, "month, ", 
-                                                    triple_nr, "week and ", 
-                                                    triple_nr, " day.")]
-  dt[triple <= today(), `What about triples?` := gsub(`What about triples?`, 
-                                        pattern = "will be", replacement = "were", fixed = TRUE)]
+  dt[triple <= today(), message := gsub(message, 
+                      pattern = "will be", replacement = "were", fixed = TRUE)]
+  dt <- dt[order(triple)]
+  dt[, triple_nr := 1:.N]
+  
   setnames(dt, "triple", "Triple")
   setnames(dt, "triple_nr", "Triple Nr.")
+  setnames(dt, "message", "Message")
+  
   return(dt)
 }
