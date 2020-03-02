@@ -1,6 +1,6 @@
 Package: sober
 Title: Display days since getting away from something
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: person('matthias', 'berger', email = 'bidmaster@gmx.de', role = c('cre', 'aut'))
 Description: Enter a date and get useful information and statistics.
 License: MIT + file LICENSE

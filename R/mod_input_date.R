@@ -39,7 +39,9 @@ mod_input_date_server <- function(input, output, session){
   ns <- session$ns
   
   observeEvent( input$calculate , {
-    result_data <- calculate_triples(input$date)
+    result_doubles <- calculate_doubles(input$date)
+    result_triples <- calculate_triples(input$date)
+    result_data <- rbindlist(list(result_doubles, result_triples))[order(Event)]
     output$result_data <- DT::renderDataTable({ result_data })
   })
   

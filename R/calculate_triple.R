@@ -15,13 +15,13 @@
 #' @examples result <- calculate_triples(lubridate::ymd("2020-02-20"))
 calculate_triples <- function(clean_date) {
   
-  number <- 100
+  number <- 50
   
   dt_list <- list()
   for (i in 1:number) {
     dt_list[[i]] <- data.table(
-      triple = clean_date %m+% months(i) %m+% weeks(i) %m+% days(i))
-    dt_list[[i]][, message := paste("On ", triple, " you will be sober for ", 
+      event = clean_date %m+% months(i) %m+% weeks(i) %m+% days(i))
+    dt_list[[i]][, message := paste("On ", event, " you will be sober for ", 
                                    i, "months, ", 
                                    i, "weeks and ", 
                                    i, " days.")]
@@ -31,8 +31,8 @@ calculate_triples <- function(clean_date) {
   }
   for (i in 1:number) {
     dt_list[[i+number]] <- data.table(
-      triple = clean_date %m+% years(i) %m+% weeks(i) %m+% days(i))
-    dt_list[[i+number]][, message := paste("On ", triple, " you will be sober for ", 
+      event = clean_date %m+% years(i) %m+% weeks(i) %m+% days(i))
+    dt_list[[i+number]][, message := paste("On ", event, " you will be sober for ", 
                                     i, "years, ", 
                                     i, "weeks and ", 
                                     i, " days.")] 
@@ -42,8 +42,8 @@ calculate_triples <- function(clean_date) {
   }
   for (i in 1:number) {
     dt_list[[i+(2*number)]] <- data.table(
-      triple = clean_date %m+% years(i) %m+% months(i) %m+% weeks(i))
-    dt_list[[i+(2*number)]][, message := paste("On ", triple, " you will be sober for ", 
+      event = clean_date %m+% years(i) %m+% months(i) %m+% weeks(i))
+    dt_list[[i+(2*number)]][, message := paste("On ", event, " you will be sober for ", 
                                     i, "years, ", 
                                     i, "months and ", 
                                     i, " weeks.")]
@@ -53,8 +53,8 @@ calculate_triples <- function(clean_date) {
   }
   for (i in 1:number) {
     dt_list[[i+(3*number)]] <- data.table(
-      triple = clean_date %m+% years(i) %m+% months(i) %m+% days(i))
-    dt_list[[i+(3*number)]][, message := paste("On ", triple, " you will be sober for ", 
+      event = clean_date %m+% years(i) %m+% months(i) %m+% days(i))
+    dt_list[[i+(3*number)]][, message := paste("On ", event, " you will be sober for ", 
                                     i, "years, ", 
                                     i, "months and ", 
                                     i, " days.")]
@@ -64,13 +64,15 @@ calculate_triples <- function(clean_date) {
   }
   
   dt <- rbindlist(dt_list)
-  dt[triple <= today(), message := gsub(message, 
+  dt[event <= today(), message := gsub(message, 
                       pattern = "will be", replacement = "were", fixed = TRUE)]
-  dt <- dt[order(triple)]
-  dt[, triple_nr := 1:.N]
+  dt <- dt[order(event)]
+  dt[, number := 1:.N]
+  dt[, kind := "Triple"]
   
-  setnames(dt, "triple", "Triple")
-  setnames(dt, "triple_nr", "Triple Nr.")
+  setnames(dt, "event", "Event")
+  setnames(dt, "number", "Number")
+  setnames(dt, "kind", "Kind")
   setnames(dt, "message", "Message")
   
   return(dt)

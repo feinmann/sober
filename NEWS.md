@@ -1,3 +1,7 @@
+# sober 0.1.2
+
+* Added all variants for `doubles` and `triples` out of year, month, week, day
+
 # sober 0.1.1
 
 * Adjust column-names and delete `clean_date` column
