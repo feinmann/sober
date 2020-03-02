@@ -25,6 +25,9 @@ calculate_triples <- function(clean_date) {
                                    i, "months, ", 
                                    i, "weeks and ", 
                                    i, " days.")]
+    dt_list[[1]][, message := gsub("months", "month", message)]
+    dt_list[[1]][, message := gsub("weeks", "week", message)]
+    dt_list[[1]][, message := gsub("days", "day", message)]
   }
   for (i in 1:number) {
     dt_list[[i+number]] <- data.table(
@@ -32,7 +35,10 @@ calculate_triples <- function(clean_date) {
     dt_list[[i+number]][, message := paste("On ", triple, " you will be sober for ", 
                                     i, "years, ", 
                                     i, "weeks and ", 
-                                    i, " days.")]  
+                                    i, " days.")] 
+    dt_list[[1+number]][, message := gsub("years", "year", message)]
+    dt_list[[1+number]][, message := gsub("weeks", "week", message)]
+    dt_list[[1+number]][, message := gsub("days", "day", message)]
   }
   for (i in 1:number) {
     dt_list[[i+(2*number)]] <- data.table(
@@ -41,6 +47,9 @@ calculate_triples <- function(clean_date) {
                                     i, "years, ", 
                                     i, "months and ", 
                                     i, " weeks.")]
+    dt_list[[1+(2*number)]][, message := gsub("years", "year", message)]
+    dt_list[[1+(2*number)]][, message := gsub("months", "month", message)]
+    dt_list[[1+(2*number)]][, message := gsub("weeks", "week", message)]
   }
   for (i in 1:number) {
     dt_list[[i+(3*number)]] <- data.table(
@@ -49,6 +58,9 @@ calculate_triples <- function(clean_date) {
                                     i, "years, ", 
                                     i, "months and ", 
                                     i, " days.")]
+    dt_list[[1+(3*number)]][, message := gsub("years", "year", message)]
+    dt_list[[1+(3*number)]][, message := gsub("months", "month", message)]
+    dt_list[[1+(3*number)]][, message := gsub("days", "day", message)]
   }
   
   dt <- rbindlist(dt_list)
