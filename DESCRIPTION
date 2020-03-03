@@ -16,7 +16,8 @@ Imports:
     htmltools,
     pkgload,
     data.table,
-    lubridate
+    lubridate,
+    shinydashboard
 RoxygenNote: 7.0.2
 Suggests: 
     testthat
