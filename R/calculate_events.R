@@ -43,6 +43,7 @@ calculate_events <- function(clean_date) {
   
   tmp[, event := clean_date %m+% years(year) %m+% months(month) %m+% weeks(week) %m+% days(day)]
   
+  tmp[, clean_date := clean_date]
   tmp <- tmp[order(event)]
   
   tmp[year == month & week == 0 & day == 0, kind := "double"]
@@ -66,6 +67,14 @@ calculate_events <- function(clean_date) {
 }
 
 
-get_next_events <- function(events) {
-  events[event > lubridate::today(), head(.SD, 1), by=.(kind)][, .(event, kind)]
+get_next_events <- function(events, clean_date) {
+  tmp <- events[event > lubridate::today(), head(.SD, 1), by=.(kind)][, .(event, kind)]
+  tmp[, time_until_event := event - lubridate::today()]
+  return(tmp)
+}
+
+get_last_events <- function(events) {
+  tmp <- events[event < lubridate::today(), head(.SD, 1), by=.(kind)][, .(event, kind, clean_date)]
+  tmp[, time_since_clean := event - clean_date][, .(event, kind, time_since_clean)]
+  return(tmp)
 }
