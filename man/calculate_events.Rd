@@ -21,7 +21,7 @@ indicating a triple, namely 1 year, 1 week and 1 day soberness.
 \details{
 (0, 0, x, x): double 
  (0, x, x, x): triple 
- (x, x, x, x): quartuble
+ (x, x, x, x): quartruble
 }
 \examples{
 result <- calculate_events(lubridate::ymd("2012-02-20"))

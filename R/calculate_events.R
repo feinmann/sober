@@ -7,7 +7,7 @@
 #' 
 #'  (0, 0, x, x): double 
 #'  (0, x, x, x): triple 
-#'  (x, x, x, x): quartuble 
+#'  (x, x, x, x): quartruble 
 #'
 #' @param clean_date Date
 #'
@@ -58,7 +58,7 @@ calculate_events <- function(clean_date) {
   tmp[year == day & day == week & month == 0, kind := "triple"]
   tmp[month == day & day == week & year == 0, kind := "triple"]
   
-  tmp[year == month & month == week & week == day, kind := "quartuble"]
+  tmp[year == month & month == week & week == day, kind := "quartruple"]
   tmp[year == 0 & month == 0 & week == 0 & day == 0, kind := NA_character_]
   
   tmp <- tmp[!is.na(kind), ]
@@ -67,14 +67,26 @@ calculate_events <- function(clean_date) {
 }
 
 
-get_next_events <- function(events, clean_date) {
-  tmp <- events[event > lubridate::today(), head(.SD, 1), by=.(kind)][, .(event, kind)]
-  tmp[, time_until_event := event - lubridate::today()]
+get_next_events <- function(events) {
+  tmp <- events[event > lubridate::today(), head(.SD, 1), by=.(kind)]
+  tmp[, time_until_event := paste0(event - lubridate::today(), " days from today!")]
   return(tmp)
 }
 
 get_last_events <- function(events) {
-  tmp <- events[event < lubridate::today(), head(.SD, 1), by=.(kind)][, .(event, kind, clean_date)]
-  tmp[, time_since_clean := event - clean_date][, .(event, kind, time_since_clean)]
+  tmp <- events[event < lubridate::today(), head(.SD, 1), by=.(kind)]
+  tmp[, time_since_event := paste0(lubridate::today() - event, " days ago.")]
   return(tmp)
+}
+
+count_doubles <- function(events) {
+  events[kind == "double" & event < lubridate::today(), .N]
+}
+
+count_triples <- function(events) {
+  events[kind == "triple" & event < lubridate::today(), .N]
+}
+
+count_quartruples <- function(events) {
+  events[kind == "quartruple" & event < lubridate::today(), .N]
 }
