@@ -1,12 +1,14 @@
 #' @import shiny
+#' @import shinydashboard
 app_ui <- function() {
   tagList(
     # Leave this function for adding external resources
     golem_add_external_resources(),
     # List the first level UI elements here 
-    fluidPage(
-      h1("sober"),
-      mod_input_date_ui("input_date_ui_1")
+    dashboardPage(skin = "black",
+      dashboardHeader(title = "sober"),
+      dashboardSidebar(collapsed = TRUE),
+      dashboardBody(mod_input_date_ui("input_date_ui_1"))
     )
   )
 }
