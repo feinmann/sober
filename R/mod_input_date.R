@@ -16,20 +16,42 @@
 mod_input_date_ui <- function(id){
   ns <- NS(id)
   tagList(
-    dateInput(
-      inputId = ns("date"), 
-      label = "Clean date"
+    fluidRow(
+      
+      column(4,
+             dateInput(
+               inputId = ns("date"), 
+               label = "Clean date",
+               value = "2018-04-07"
+             ),
+             actionButton(
+               inputId = ns("calculate"),
+               label = "Calculate statistics"
+             )       
+      ),
+      
+      column(4, 
+             selectInput(ns("select"), label = "Select box", 
+                         choices = list("Please select ..." = 0, "Chocolate" = 1, "Meat" = 2, "Drugs" = 3), 
+                         selected = 0)
+      )
     ),
-    actionButton(
-      inputId = ns("calculate"),
-      label = "Calculate statistics"
+    br(),
+    fluidRow(valueBoxOutput(ns("sober_time"))), 
+    fluidRow(
+      valueBoxOutput(ns("doubles")),
+      valueBoxOutput(ns("triples")),
+      valueBoxOutput(ns("quartruples")) 
     ),
     hr(),
-    DT::dataTableOutput(outputId = ns('all_events')),
-    hr(),
+    h3("Last events"),
     DT::dataTableOutput(outputId = ns('last_events')),
     hr(),
-    DT::dataTableOutput(outputId = ns('next_events'))
+    h3("Upcoming events..."),
+    DT::dataTableOutput(outputId = ns('next_events')),
+    hr(),
+    h3("All events"),
+    DT::dataTableOutput(outputId = ns('all_events'))
   )
 }
     
@@ -49,6 +71,49 @@ mod_input_date_server <- function(input, output, session){
     output$all_events <- DT::renderDataTable({ all_events })
     output$last_events <- DT::renderDataTable({ last_events })
     output$next_events <- DT::renderDataTable({ next_events })
+    output$sober_time <- renderValueBox({ 
+                            valueBox(
+                              value = "You can do it",
+                              subtitle = paste("You are sober for ", 
+                                               lubridate::today() - input$date, 
+                                               " days."),
+                              icon = icon("refresh"),
+                              width = 8
+                            ) 
+                         })
+    output$doubles <- renderValueBox({ 
+                           valueBox(
+                             value = "Doubles",
+                             subtitle = paste("You collected ", 
+                                              count_doubles(all_events), 
+                                              " doubles so far."),
+                             icon = icon("check-double"),
+                             width = 8,
+                             color = "lime"
+                           ) 
+                         })
+    output$triples <- renderValueBox({ 
+                           valueBox(
+                             value = "Triples",
+                             subtitle = paste("You collected ", 
+                                              count_triples(all_events), 
+                                              " triples so far."),
+                             icon = icon("dice-three"),
+                             width = 8,
+                             color = "olive"
+                           ) 
+                         })
+    output$quartruples <- renderValueBox({ 
+                           valueBox(
+                             value = "Quartruples",
+                             subtitle = paste("You collected ", 
+                                              count_quartruples(all_events), 
+                                              " quartruple so far."),
+                             icon = icon("fort-awesome"),
+                             width = 8,
+                             color = "orange"
+                           ) 
+                         })
   })
   
 }
