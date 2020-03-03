@@ -25,7 +25,11 @@ mod_input_date_ui <- function(id){
       label = "Calculate statistics"
     ),
     hr(),
-    DT::dataTableOutput(outputId = ns('result_data'))
+    DT::dataTableOutput(outputId = ns('all_events')),
+    hr(),
+    DT::dataTableOutput(outputId = ns('last_events')),
+    hr(),
+    DT::dataTableOutput(outputId = ns('next_events'))
   )
 }
     
@@ -39,10 +43,12 @@ mod_input_date_server <- function(input, output, session){
   ns <- session$ns
   
   observeEvent( input$calculate , {
-    result_doubles <- calculate_doubles(input$date)
-    result_triples <- calculate_triples(input$date)
-    result_data <- rbindlist(list(result_doubles, result_triples))[order(Event)]
-    output$result_data <- DT::renderDataTable({ result_data })
+    all_events <- calculate_events(input$date)
+    last_events <- get_last_events(all_events)
+    next_events <- get_next_events(all_events)
+    output$all_events <- DT::renderDataTable({ all_events })
+    output$last_events <- DT::renderDataTable({ last_events })
+    output$next_events <- DT::renderDataTable({ next_events })
   })
   
 }
