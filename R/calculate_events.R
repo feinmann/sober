@@ -74,7 +74,7 @@ get_next_events <- function(events) {
 }
 
 get_last_events <- function(events) {
-  tmp <- events[event < lubridate::today(), head(.SD, 1), by=.(kind)]
+  tmp <- events[order(-event)][event < lubridate::today(), head(.SD, 1), by=.(kind)]
   tmp[, time_since_event := paste0(lubridate::today() - event, " days ago.")]
   return(tmp)
 }
