@@ -1,3 +1,8 @@
+# sober 0.3.0
+
+* Added information about saved cash after choosing substance
+* At the moment fixed value for cash savings per substance
+
 # sober 0.2.0
 
 * Added `shinydashboard` layout for more flexibility

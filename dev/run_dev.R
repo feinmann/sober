@@ -14,4 +14,5 @@ sober::run_app()
 # Deloy
 options(golem.app.prod = TRUE)
 rsconnect::deployApp()
-Y
+rstudioapi::navigateToFile( "DESCRIPTION" )
+rstudioapi::navigateToFile( "NEWS.md" )
