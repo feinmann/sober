@@ -7,7 +7,7 @@
 
 ## 2.1 Add modules
 ## 
-golem::add_module( name = "input_date" ) # Name of the module
+golem::add_module( name = "choose_substance" ) # Name of the module
 golem::add_module( name = "display_date_statistic" ) # Name of the module
 
 ## 2.2 Add dependencies

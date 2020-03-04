@@ -30,10 +30,8 @@ mod_input_date_ui <- function(id){
              )       
       ),
       
-      column(4, 
-             selectInput(ns("select"), label = "Select box", 
-                         choices = list("Please select ..." = 0, "Chocolate" = 1, "Meat" = 2, "Drugs" = 3), 
-                         selected = 0)
+      column(8, 
+             mod_choose_substance_ui("choose_substance_ui_1")
       )
     ),
     br(),
@@ -116,6 +114,7 @@ mod_input_date_server <- function(input, output, session){
                          })
   })
   
+  #reactive(return(lubridate::today() - input$date))
 }
     
 ## To be copied in the UI
