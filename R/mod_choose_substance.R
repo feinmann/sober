@@ -45,7 +45,7 @@ mod_choose_substance_ui <- function(id){
 #' @export
 #' @keywords internal
     
-mod_choose_substance_server <- function(input, output, session){
+mod_choose_substance_server <- function(input, output, session, sober_time){
   ns <- session$ns
   
   daily_costs <- data.table(
@@ -60,10 +60,11 @@ mod_choose_substance_server <- function(input, output, session){
     daily_cost <- daily_costs[substance_id == input$select, daily_cost]
       output$saved_cost <- renderValueBox({ 
         valueBox(
-          value = "You can do it",
-          subtitle = paste("You saved ", daily_cost, "€ so far."),
-          icon = icon("cash"),
-          width = 8
+          value = "$ CASH:",
+          subtitle = paste("You saved ", daily_cost * sober_time(), "€ so far."),
+          icon = icon("money-bill-alt"),
+          width = 8,
+          color = "green"
         ) 
       })
     })

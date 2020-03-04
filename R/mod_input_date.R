@@ -114,7 +114,7 @@ mod_input_date_server <- function(input, output, session){
                          })
   })
   
-  #reactive(return(lubridate::today() - input$date))
+  reactive(return(lubridate::today() - input$date))
 }
     
 ## To be copied in the UI

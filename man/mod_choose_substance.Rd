@@ -7,7 +7,7 @@
 \usage{
 mod_choose_substance_ui(id)
 
-mod_choose_substance_server(input, output, session)
+mod_choose_substance_server(input, output, session, sober_time)
 }
 \arguments{
 \item{id}{shiny id}
