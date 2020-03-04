@@ -10,3 +10,8 @@ golem::document_and_reload()
 
 # Run the application
 sober::run_app()
+
+# Deloy
+options(golem.app.prod = TRUE)
+rsconnect::deployApp()
+Y
