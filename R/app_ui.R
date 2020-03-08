@@ -8,7 +8,9 @@ app_ui <- function() {
     dashboardPage(skin = "black",
       dashboardHeader(title = "sober"),
       dashboardSidebar(collapsed = TRUE),
-      dashboardBody(mod_input_date_ui("input_date_ui_1"))
+      dashboardBody(
+          mod_input_date_ui("input_date_ui_1")
+      )
     )
   )
 }

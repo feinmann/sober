@@ -1,3 +1,9 @@
+# sober 0.4.0
+
+* Added `single` event (defined as exactly n years)
+* Added simplified representation for event, namely Y-M-W-D as one column
+* Added horizontal scrolling to tables
+
 # sober 0.3.0
 
 * Added information about saved cash after choosing substance

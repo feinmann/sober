@@ -37,6 +37,7 @@ mod_input_date_ui <- function(id){
     br(),
     fluidRow(valueBoxOutput(ns("sober_time"))), 
     fluidRow(
+      valueBoxOutput(ns("singles")),
       valueBoxOutput(ns("doubles")),
       valueBoxOutput(ns("triples")),
       valueBoxOutput(ns("quartruples")) 
@@ -66,9 +67,12 @@ mod_input_date_server <- function(input, output, session){
     all_events <- calculate_events(input$date)
     last_events <- get_last_events(all_events)
     next_events <- get_next_events(all_events)
-    output$all_events <- DT::renderDataTable({ all_events })
-    output$last_events <- DT::renderDataTable({ last_events })
-    output$next_events <- DT::renderDataTable({ next_events })
+    output$all_events <- DT::renderDataTable({ all_events },
+                                             options = list(scrollX = TRUE))
+    output$last_events <- DT::renderDataTable({ last_events },
+                                              options = list(scrollX = TRUE))
+    output$next_events <- DT::renderDataTable({ next_events },
+                                              options = list(scrollX = TRUE))
     output$sober_time <- renderValueBox({ 
                             valueBox(
                               value = "You can do it",
@@ -79,6 +83,17 @@ mod_input_date_server <- function(input, output, session){
                               width = 8
                             ) 
                          })
+    output$singles <- renderValueBox({ 
+      valueBox(
+        value = "Singles",
+        subtitle = paste("You collected ", 
+                         count_singles(all_events), 
+                         " singles so far."),
+        icon = icon("gratipay"),
+        width = 8,
+        color = "light-blue"
+      ) 
+    })
     output$doubles <- renderValueBox({ 
                            valueBox(
                              value = "Doubles",

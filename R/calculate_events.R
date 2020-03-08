@@ -5,8 +5,9 @@
 #' four-tuple: (year, month, week, day), for instance (1, 0, 1, 1) 
 #' indicating a triple, namely 1 year, 1 week and 1 day soberness.
 #' 
-#'  (0, 0, x, x): double 
-#'  (0, x, x, x): triple 
+#'  (x, 0, 0, 0): single
+#'  (0, 0, x, x), (0, x, x, 0), ... : double 
+#'  (0, x, x, x), (x, x, x, 0), ... : triple 
 #'  (x, x, x, x): quartruble 
 #'
 #' @param clean_date Date
@@ -46,6 +47,8 @@ calculate_events <- function(clean_date) {
   tmp[, clean_date := clean_date]
   tmp <- tmp[order(event)]
   
+  tmp[month == 0 & week == 0 & day == 0, kind := "single"]
+  
   tmp[year == month & week == 0 & day == 0, kind := "double"]
   tmp[year == week & month == 0 & day == 0, kind := "double"]
   tmp[year == day & week == 0 & month == 0, kind := "double"]
@@ -62,7 +65,16 @@ calculate_events <- function(clean_date) {
   tmp[year == 0 & month == 0 & week == 0 & day == 0, kind := NA_character_]
   
   tmp <- tmp[!is.na(kind), ]
-
+  
+  tmp[, `Y-M-W-D` := paste(year, month, week, day, sep = "-")]
+  tmp[, year := NULL]
+  tmp[, month := NULL]
+  tmp[, week := NULL]
+  tmp[, day := NULL]
+  tmp[, clean_date := NULL]
+  
+  setcolorder(tmp, c("event", "kind", "Y-M-W-D"))
+  
   return(tmp)
 }
 
@@ -70,13 +82,19 @@ calculate_events <- function(clean_date) {
 get_next_events <- function(events) {
   tmp <- events[event > lubridate::today(), head(.SD, 1), by=.(kind)]
   tmp[, time_until_event := paste0(event - lubridate::today(), " days from today!")]
+  setcolorder(tmp, c("event", "kind", "Y-M-W-D"))
   return(tmp)
 }
 
 get_last_events <- function(events) {
   tmp <- events[order(-event)][event < lubridate::today(), head(.SD, 1), by=.(kind)]
   tmp[, time_since_event := paste0(lubridate::today() - event, " days ago.")]
+  setcolorder(tmp, c("event", "kind", "Y-M-W-D"))
   return(tmp)
+}
+
+count_singles <- function(events) {
+  events[kind == "single" & event < lubridate::today(), .N]
 }
 
 count_doubles <- function(events) {
