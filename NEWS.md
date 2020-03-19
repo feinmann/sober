@@ -1,3 +1,7 @@
+# sober 0.5.1
+
+* Change colorset for valueBoxes and font-size to 200%
+
 # sober 0.5.0
 
 * Added today events as table
