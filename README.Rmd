@@ -38,3 +38,6 @@ This is a basic example which shows you how to solve a common problem:
 library(sober)
 run_app()
 ```
+## Try online
+
+You can try the app online at https://feinmann.shinyapps.io/sober/.
