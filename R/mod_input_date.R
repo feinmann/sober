@@ -89,59 +89,60 @@ mod_input_date_server <- function(input, output, session){
     output$sober_time <- renderValueBox({ 
                             valueBox(
                               value = "You can do it",
-                              subtitle = paste("You are sober for ", 
+                              subtitle = tags$p(paste("You are sober for ", 
                                                lubridate::today() - input$date, 
-                                               " days."),
+                                               " days"), style = "font-size: 200%;"),
                               icon = icon("refresh"),
-                              width = 8
+                              width = 8,
+                              color = "green"
                             ) 
                          })
     output$singles <- renderValueBox({ 
       valueBox(
         value = "Singles",
-        subtitle = paste("You collected ", 
+        subtitle = tags$p(paste("You collected ", 
                          count_singles(all_events), 
-                         " singles so far."),
+                         " singles so far"), style = "font-size: 200%;"),
         icon = icon("gratipay"),
         width = 8,
-        color = "light-blue"
+        color = "purple"
       ) 
     })
     output$doubles <- renderValueBox({ 
                            valueBox(
                              value = "Doubles",
-                             subtitle = paste("You collected ", 
+                             subtitle = tags$p(paste("You collected ", 
                                               count_doubles(all_events), 
-                                              " doubles so far."),
+                                              " doubles so far"), style = "font-size: 200%;"),
                              icon = icon("check-double"),
                              width = 8,
-                             color = "lime"
+                             color = "light-blue"
                            ) 
                          })
     output$triples <- renderValueBox({ 
                            valueBox(
                              value = "Triples",
-                             subtitle = paste("You collected ", 
+                             subtitle = tags$p(paste("You collected ", 
                                               count_triples(all_events), 
-                                              " triples so far."),
+                                              " triples so far"), style = "font-size: 200%;"),
                              icon = icon("dice-three"),
                              width = 8,
-                             color = "olive"
+                             color = "teal"
                            ) 
                          })
     output$quartruples <- renderValueBox({ 
                            valueBox(
                              value = "Quartruples",
-                             subtitle = paste("You collected ", 
+                             subtitle = tags$p(paste("You collected ", 
                                               count_quartruples(all_events), 
-                                              " quartruple so far."),
+                                              " quartruple so far"), style = "font-size: 200%;"),
                              icon = icon("fort-awesome"),
                              width = 8,
-                             color = "orange"
+                             color = "olive"
                            ) 
                          })
   })
-  
+
   reactive(return(lubridate::today() - input$date))
 }
     
