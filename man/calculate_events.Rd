@@ -19,8 +19,9 @@ four-tuple: (year, month, week, day), for instance (1, 0, 1, 1)
 indicating a triple, namely 1 year, 1 week and 1 day soberness.
 }
 \details{
-(0, 0, x, x): double 
- (0, x, x, x): triple 
+(x, 0, 0, 0): single
+ (0, 0, x, x), (0, x, x, 0), ... : double 
+ (0, x, x, x), (x, x, x, 0), ... : triple 
  (x, x, x, x): quartruble
 }
 \examples{

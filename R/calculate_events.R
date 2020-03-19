@@ -93,6 +93,10 @@ get_last_events <- function(events) {
   return(tmp)
 }
 
+get_today_events <- function(events) {
+  events[event == lubridate::today(), ]
+}
+
 count_singles <- function(events) {
   events[kind == "single" & event < lubridate::today(), .N]
 }

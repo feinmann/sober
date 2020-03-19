@@ -43,6 +43,9 @@ mod_input_date_ui <- function(id){
       valueBoxOutput(ns("quartruples")) 
     ),
     hr(),
+    h3("Today events"),
+    hr(),
+    DT::dataTableOutput(outputId = ns('today_events')),
     h3("Last events"),
     DT::dataTableOutput(outputId = ns('last_events')),
     hr(),
@@ -64,9 +67,19 @@ mod_input_date_server <- function(input, output, session){
   ns <- session$ns
   
   observeEvent( input$calculate , {
+    
     all_events <- calculate_events(input$date)
+    
     last_events <- get_last_events(all_events)
     next_events <- get_next_events(all_events)
+    today_events <- get_today_events(all_events)
+    
+    output$today_events <- DT::renderDataTable({ 
+        
+        validate(need(nrow(today_events) > 0, "Today no events, I'm afraid. Keep going!"))
+        
+        today_events }, options = list(scrollX = TRUE))
+    
     output$all_events <- DT::renderDataTable({ all_events },
                                              options = list(scrollX = TRUE))
     output$last_events <- DT::renderDataTable({ last_events },
