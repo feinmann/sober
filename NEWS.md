@@ -1,3 +1,7 @@
+# sober 0.5.0
+
+* Added today events as table
+
 # sober 0.4.0
 
 * Added `single` event (defined as exactly n years)
